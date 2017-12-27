@@ -25,7 +25,7 @@ public class Accomm001Controller {
 
 	/**
 	 * 숙박시설을 조회한다.
-	 * @param Map - 목록 조회조건 정보
+	 * @param Map - 목록 조회조건 정보 11
 	 * @return "selectAccomm001List"
 	 * @exception Exception
 	 */	
