@@ -1,0 +1,32 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
+<tiles-definitions>
+    <definition name="layout" template="/WEB-INF/include/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/include//header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/include//menu.jsp" />
+        <put-attribute name="main" value="" />
+        <put-attribute name="footer" value="/WEB-INF/include/footer.jsp" />
+    </definition>
+ 
+    <definition name="/*" extends="layout">
+        <put-attribute name="main" value="/WEB-INF/jsp/travel/{1}.jsp" />
+    </definition>
+    
+	<definition name="login/*" extends="layout">
+        <put-attribute name="main" value="/WEB-INF/jsp/travel/login/{1}.jsp" />
+    </definition> 
+    
+    <definition name="*/*" extends="layout">
+        <put-attribute name="main" value="/WEB-INF/jsp/travel/{1}/{2}.jsp" />
+    </definition> 
+    
+    <!-- 예외처리 -->
+    <definition name="empty" template="/WEB-INF/include/empty.jsp">
+    	<put-attribute name="main" value=""/>
+    </definition>
+    
+    <definition name="sample/*" extends="empty">
+    	<put-attribute name="main" value="/WEB-INF/jsp/travel/example/sample/{1}.jsp"></put-attribute>
+    </definition>
+    
+</tiles-definitions>
