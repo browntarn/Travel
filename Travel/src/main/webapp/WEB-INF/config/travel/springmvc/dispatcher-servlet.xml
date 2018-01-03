@@ -59,7 +59,7 @@
 	        </list>
 	    </property>
 	</bean>	    
-
+	
     <!-- For Pagination Tag -->
     <bean id="imageRenderer" class="travel.example.cmmn.web.EgovImgPaginationRenderer"/>
 
