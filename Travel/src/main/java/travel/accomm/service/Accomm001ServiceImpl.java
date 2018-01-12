@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import travel.common.Api.apiCommon;
@@ -20,8 +19,8 @@ public class Accomm001ServiceImpl implements Accomm001Service{
 	@Override
 	public List<Map<String, Object>> selectAccomm001List(Map<String, Object> map) throws Exception {
 		
+		String accommUrl = propertiesService.getString("accommUrl");
 		String authenticationKey = propertiesService.getString("authenticationKey");
-		String travelUrl = propertiesService.getString("travelUrl");
 		
 		//String url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchStay?ServiceKey=4lBgY9cDqJIpN1Z8iUbivpOCw0Gpz9wv89knT5YvKw0%2Fez7p%2FnHffV0EHiD6tGFirL6fw%2BQV20F1wM9KdokJxg%3D%3D&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1";
 		StringBuffer addUrl = new StringBuffer();
@@ -45,7 +44,7 @@ public class Accomm001ServiceImpl implements Accomm001Service{
 		//addUrl.append("&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1");
 		
 		apiCommon apiCommon = new apiCommon();
-		return apiCommon.getXmlParsing(travelUrl+addUrl.toString());
+		return apiCommon.getXmlParsing(accommUrl+addUrl.toString());
 		
 		//지역코드 조회
 		//http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=4lBgY9cDqJIpN1Z8iUbivpOCw0Gpz9wv89knT5YvKw0%2Fez7p%2FnHffV0EHiD6tGFirL6fw%2BQV20F1wM9KdokJxg%3D%3D&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A
@@ -60,7 +59,7 @@ public class Accomm001ServiceImpl implements Accomm001Service{
 	public String accomm001ListAjax(Map<String, Object> map) throws Exception {
 		
 		String authenticationKey = propertiesService.getString("authenticationKey");
-		String travelUrl = propertiesService.getString("travelUrl");
+		String travelUrl = propertiesService.getString("accommUrl");
 		StringBuffer addUrl = new StringBuffer();
 		addUrl.append(authenticationKey);  //인증키번호
 		//addUrl.append("&categoryCode="); //서비스 분류코드 조회

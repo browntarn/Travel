@@ -161,7 +161,8 @@
                             <li><a href="#work">Portfolio</a></li>
                             <li><a href="#test">Blog</a></li>
                             <li><a href="#contact">Contact</a></li>
-                            <li><a href="schedule/scheduleList.do">국내여행</a></li>
+                            <li><a href="/schedule/scheduleList.do">국내여행Ori</a></li>
+                            <li><a href="/schedule/schdule001List.do">국내여행</a></li>
                             <li><a href="/accomm/accomm001List.do">숙박</a></li>
                             <li><a href="">음식</a></li>
                         </ul>

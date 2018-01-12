@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,7 +32,7 @@ public class ScheduleController {
 	protected DefaultBeanValidator beanValidator;
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "schedule/scheduleList.do")
+	@RequestMapping(value = "/schedule/scheduleList.do")
 	public ModelAndView getScheduleList(HttpServletRequest request, @RequestParam Map<String, Object> commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		if (commandMap.get("areaSelectList") == null) {
@@ -46,17 +45,17 @@ public class ScheduleController {
 		request.setAttribute("recentList", recentList);
 		request.setAttribute("areaList", areaList);
 		mv.addObject("commandMap", commandMap);
-		mv.setViewName("schedule/scheduleList");
+		mv.setViewName("/schedule/scheduleList");
 		return mv;
 	}
 
-	@RequestMapping(value = "schedule/scheduleDetail.do")
+	@RequestMapping(value = "/schedule/scheduleDetail.do")
 	public ModelAndView getScheduleDetail(HttpServletRequest request, @RequestParam Map<String, Object> commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> detailResult = scheduleService.getScheduleDetail(commandMap);
 		request.setAttribute("detailResult", detailResult);
 		mv.addObject("commandMap", commandMap);
-		mv.setViewName("schedule/scheduleDetail");
+		mv.setViewName("/schedule/scheduleDetail");
 		return mv;
 	}
 	

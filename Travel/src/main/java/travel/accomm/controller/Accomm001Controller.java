@@ -43,7 +43,7 @@ public class Accomm001Controller {
 		ModelAndView mv = new ModelAndView();
 		List<Map<String, Object>> dataList = accomm001Service.selectAccomm001List(map);		
 		mv.addObject("resultList", dataList);
-		mv.setViewName("accomm/accomm001List");
+		mv.setViewName("/accomm/accomm001List");
 		return mv;
 	}
 	
