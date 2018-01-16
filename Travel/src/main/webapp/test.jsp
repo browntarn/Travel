@@ -9,12 +9,10 @@
 <script type="text/javascript">
 
 function goAjax1(){
-	var sendData = JSON.stringify({aa:$('#AA').val(), bb:$('#BB').val()});
  	$.ajax({
 		type: "POST",
 		url : "<c:url value='/goAjax1.do' />",
 		dataType: "json",
-		data : sendData,
 		contentType:"application/json;charset=UTF-8",
 		async: false,
 		success : function(data, status, xhr) {

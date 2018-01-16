@@ -1,13 +1,9 @@
 package travel.common.Api;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,14 +14,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 public class apiCommon {
 	Logger log = Logger.getLogger(this.getClass());
@@ -79,9 +73,10 @@ public class apiCommon {
 		}
 		return doc;
 	}
-	
+
 	/**
-	 * @param paramUrl JSON 주소 데이터 출력
+	 * @param paramUrl : API 호출주소
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getJsonParsing(String paramUrl){
@@ -98,7 +93,7 @@ public class apiCommon {
 	        JSONArray array = (JSONArray)json2.get("item");
 	        
 	        log.info("######### 목록조회 시작 #########");
-	        for(int i=0; i<((Map<String, Object>) array).size(); i++){
+	        for(int i=0; i<array.size(); i++){
 	        	JSONObject tmp = (JSONObject)array.get(i);
 	        	resultMap = new HashMap<String, Object>();
 	        	Iterator<String> iterator = tmp.keySet().iterator();
@@ -118,6 +113,11 @@ public class apiCommon {
 		return resultList;
 	}
 	
+	/**
+	 * @param getUrl : API 호출주소
+	 * @return
+	 * @throws Exception
+	 */
 	public String readUrlData(String getUrl) throws Exception {
 		
         BufferedInputStream reader = null;
@@ -136,47 +136,4 @@ public class apiCommon {
                 reader.close();
         }
     }
-	
-/*	public String getJsonFromUrl(String paramUrl){
-		
-		StringBuffer sb = new StringBuffer();
-		JSONObject json = null;
-		try{
-			InputStream is = new URL(paramUrl).openStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-		    int cp;
-			while ((cp = rd.read()) != -1) {
-				sb.append((char) cp);
-			}
-			//json = new JSONObject(sb.toString());
-			System.out.println("sb.toString():"+sb.toString());
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}*/
-	
-	public String getJsonFromUrl(String paramUrl){
-		
-		JSONObject json = null;
-		BufferedInputStream reader = null;
-		StringBuffer buffer = new StringBuffer();
-		int i;
-		
-		try{
-			URL url = new URL(paramUrl);
-			reader = new BufferedInputStream(url.openStream());
-			byte[] b= new byte[4096];
-			
-			while((i = reader.read(b))!=-1){
-				buffer.append(new String(b,0,i));
-			}
-			System.out.println("buffer:"+buffer.toString());
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return buffer.toString();
-	}
-
 }
