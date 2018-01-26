@@ -10,77 +10,259 @@
 	padding:14px;
 }
 </style>
+<link rel="stylesheet" type="text/css" media="screen" href="/js/jqueryui/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/jquery.jqGrid-4.4.3/css/ui.jqgrid.css" />    
+
+<script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/jqueryui/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 
-$(document).ready(function(){
-	$("#search").on("click", function(e){
-		alert("11");
+// jquery 버전충돌시 function($) 를 넣어준다
+$(document).ready(function($){
+	//setGrid($);
+	$("#search1").on("click", function(e){
 		e.preventDefault();
-		//fn_selectList();
-		    	$("#list").jqGrid({ datatype: "local", height: 250, colNames:['컬럼1','컬럼2'], colModel:[ {name:'col1',index:'col1'}, {name:'col2',index:'col2'}, ], caption: "그리드 배열 데이터 샘플링" });
-    var mydata = [ {col1:"내용1",col2:"내용1"}, {col1:"내용233",col2:"내용233"}, ]; 
-    //배열을 반복문으로 돌려서 그리드에 add 시킨다
-    for(var i=0;i<=mydata.length;i++) 
-    { $("#list").jqGrid('addRowData',i+1,mydata[i]); }
-	})
+		fn_selectList1($);
+	});
+	$("#search2").on("click", function(e){
+		e.preventDefault();
+		fn_selectList2($);
+	});
+	//setGrid2($);
+	//setGrid3($);
+	//fn_selectList($);
 });
 
-function fn_selectList(){
+/* function setGrid($){
+	$("#list").jqGrid({
+	 	colNames:[
+		         '순번',
+		         '지역',
+		         '시군구',
+		         '주제',
+		         '주소',
+		         '전화번호',
+		         '위치'
+		         ],
+		colModel:[
+		          { name : 'seq', 			index:'seq', 			width :100},
+		          { name: 'areacode', 		index:'areacode', 		width: 100},
+		          { name: 'sigungucode', 	index:'sigungucode', 	width: 100},
+		          { name: 'title', 			index:'title',	 		width: 150},
+		          { name: 'addr1', 			index:'addr1', 			width: 150},
+		          { name: 'tel', 			index:'tel', 			width: 150},				          
+		          { name: 'map', 			index:'map', 			width: 100},
+		          ],
+  	   	rowNum : 10,
+  	   	autowidth : true,
+  	   	gridview :  true,
+	   	rowList:[10,20,30],
+	    viewrecords: true,
+	   	caption: "setGrid",
+	});
+} */
+
+function fn_selectList1($){
+ 
+	$("#list").jqGrid({
+		url : "<c:url value='/schedule/schedule001ListAjax2.do'/>",
+		mtype : "POST",
+		datatype : "json",
+	 	colNames:[
+		         '순번',
+		         '지역',
+		         '시군구',
+		         '주제',
+		         '주소',
+		         '전화번호',
+		         '위치'
+		         ],
+		colModel:[
+		          { name : 'seq', 			index:'seq', 			width :100},
+		          { name: 'areacode1', 		index:'areacode', 		width: 100},
+		          { name: 'sigungucode1', 	index:'sigungucode', 	width: 100},
+		          { name: 'title', 			index:'title',	 		width: 150},
+		          { name: 'addr1', 			index:'addr1', 			width: 150},
+		          { name: 'tel', 			index:'tel', 			width: 150},				          
+		          { name: 'map', 			index:'map', 			width: 100},
+		          ],
+  	   	rowNum : 10,	   	
+  	   	autowidth : true,
+  	   	gridview :  true,
+	   	rowList:[10,20,30],
+	   	pager: '#pager2',
+	    viewrecords: true,
+	   	caption: "Manipulating Array Data",
+			jsonReader: {
+			root : "response.body.items.item",
+			repeatitems : false
+	    }, 		    
+	});	
+} 
+ 
+function fn_selectList2($){
+	$.ajax({
+		type : "POST",
+		url : "<c:url value='/schedule/schedule001ListAjax2.do'/>",
+		dataType : "json",
+		loadtext : '로딩중..',
+		contentType : "application/json; charset=UTF-8",
+		async : false,
+		success : function (data, status, xhr){
+			console.log("data:"+data);
+			console.log("data1:"+data.response.body.items.item);
+			var listData = data.response.body.items.item;
+			console.log("listData:"+listData);
+			console.log("listData[0]:"+listData[0]);
+			console.log("data2:"+listData.length);
+			console.log("data3:"+listData[0].eventenddate);
+			console.log("data4:"+listData[0].contentid);
+			
+			$("#list").jqGrid({
+				datatype : "json",
+			 	colNames:[
+				         '순번',
+				         '지역',
+				         '시군구',
+				         '주제',
+				         '주소',
+				         '전화번호',
+				         '위치'
+				         ],
+				colModel:[
+				          { name : 'seq', 			index:'seq', 			width :100},
+				          { name: 'areacode', 		index:'areacode', 		width: 100},
+				          { name: 'sigungucode', 	index:'sigungucode', 	width: 100},
+				          { name: 'title', 			index:'title',	 		width: 150},
+				          { name: 'addr1', 			index:'addr1', 			width: 150},
+				          { name: 'tel', 			index:'tel', 			width: 150},				          
+				          { name: 'map', 			index:'map', 			width: 100},
+				          ],
+		  	   	rowNum : 10,
+		  	   	autowidth : true,
+		  	   	gridview :  true,
+			   	rowList:[10,20,30],
+/* 		  	   	loadBeforeSend: function(jqXHR) {
+					jqXHR.setRequestHeader('X-ZUMO-APPLICATION', 'myKey');
+		          	},
+				loadComplete: function () {
+		          		//alert("OK");
+		    		},
+				loadError: function (jqXHR, textStatus, errorThrown) {
+		                                      alert('HTTP status code: ' + jqXHR.status + '\n' +
+		                                      'textStatus: ' + textStatus + '\n' +
+		                                      'errorThrown: ' + errorThrown);
+		                                       alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+		                               },
+				ajaxGridOptions: { contentType: "application/json", cache: true },	  */ 			   	
+			   	pager: '#pager2',
+			    viewrecords: true,
+			   	caption: "Manipulating Array Data",
+			});
+			$("#list").clearGridData();
+   			for(var i=0;i<=listData.length;i++){
+		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
+		         $("#list").jqGrid('addRowData',i+1,listData[i]);
+		 	}   
+		 	
+ 			//$("#list").jqGrid('setGridParam', { data : listData });
+			$("#list").trigger('reloadGrid'); 
+		}
+	});
+}
+
+function fn_selectList3($){
+	$.ajax({
+		type : "POST",
+		url : "<c:url value='/schedule/schedule001ListAjax2.do'/>",
+		dataType : "json",
+		loadtext : '로딩중..',
+		contentType : "application/json; charset=UTF-8",
+		async : false,
+		success : function (data, status, xhr){
+			console.log("data:"+data);
+			console.log("data1:"+data.response.body.items.item);
+			var listData = data.response.body.items.item;
+			console.log("listData:"+listData);
+			console.log("listData[0]:"+listData[0]);
+			console.log("data2:"+listData.length);
+			console.log("data3:"+listData[0].eventenddate);
+			console.log("data4:"+listData[0].contentid);
+			
+  			for(var i=0;i<=listData.length;i++){
+		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
+		         $("#list").jqGrid('addRowData',i+1,listData[i]);
+		 	} 
+/* 			$("#list").jqGrid('setGridParam', { data : listData });
+			$("#list").trigger('reloadGrid'); */
+		}
+	});
+}
+/* 
+/* function setGrid($){
+	$("#jqGrid").jqGrid({
+		datatype : "json",
+	 	colName:[
+		         '순번',
+		         '지역',
+		         '시군구',
+		         '주제',
+		         '주소',
+		         '위치'
+		         ],
+		colModel:[
+		          { name : 'seq', index:'seq', width :30},
+		          { name: 'area', index:'area', width: 30},
+		          { name: 'sigungu', index:'sigungu', width: 30},
+		          { name: 'title', index:'title', width: 150},
+		          { name: 'addr', index:'addr', width: 150},
+		          { name: 'map', index:'map', width: 50},
+		          ],
+		viewrecords : true,
+		width : 780,
+		height : 200,
+		rowNum : 10,
+		autowidth : true,
+		multiselect : true,
+		rowList : [10,20,30],
+		caption : "리스트목록"
+	})
+}
+
+function fn_selectList($){
+	alert("11");
 	$.ajax({
 		type : "POST",
 		url : "<c:url value='/schedule/schedule001ListAjax.do'/>",
 		dataType : "json",
+		jsonReader:{
+			repeatitems:false,
+			root : "items",
+			total : "totalCount"
+		},
+		loadtext : '로딩중..',
 		contentType : "application/json; charset=UTF-8",
-		async: false,
+		async : false,
 		success : function (data, status, xhr){
 			console.log(data);
 
-/* 			//가상의 local json data
-	        var gridData = [{seq:"1",create_date:"2007-10-01",create_name:"test",title:"note",hitnum:"11"},
-	                      {seq:"2",create_date:"2007-10-02",create_name:"test2",title:"note2",hitnum:"22"}];
-	         
-	        var gridData = [{seq:"1",create_date:"2007-10-01",create_name:"test",title:"note",hitnum:"11"},
-	                        {seq:"2",create_date:"2007-10-02",create_name:"test2",title:"note2",hitnum:"22"}];
-	           
-	          //jqGrid껍데기 생성
-	          $("#list").jqGrid({
-	              //로컬그리드이용
-	              datatype: "local",
-	              //그리드 높이
-	              height: 250,
-	              //컬럼명들
-	              colNames:['시퀀스','제목', '등록일', '등록자명','조회수'],
-	              //컬럼모델
-	              colModel:[
-	                  {name:'seq'},
-	                  {name:'title'},
-	                  {name:'create_date'},
-	                  {name:'create_name'},
-	                  {name:'hitnum'}    
-	              ],
-	              //그리드타이틀
-	              caption: "그리드 목록"
-	          });
-	           
-	          // 스크립트 변수에 담겨있는 json데이터의 길이만큼
-	          for(var i=0;i<=gridData.length;i++){
-	                  //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
-	                  $("#list").jqGrid('addRowData',i+1,gridData[i]);
-	          } */
-		},
-		error: function(request, status, error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			
 		}
 	})
-}
+} */
 
 </script>
 </head>
 <div class="content">
 	<div class="container">
 		<form:form id="listForm" name="listForm" method="post">
-			<input type="hidden" id="aa" name="aa" value="bb">
-			<input type="hidden" name="selectedId" />
+			<input type="hidden" id="userId=" value="test">
+			<input type="checkbox" name="hoobby" value="독서">
+			<input type="checkbox" name="hobboy" value="운동">
+			<input type="checkbox" name="hobboy" value="전시관람">
 			<div id="content_pop">
 				<!-- 타이틀 -->
 				<div id="title">
@@ -98,12 +280,17 @@ function fn_selectList(){
 					<div class="item active">
 						<div class="container">
 							<div class="row">
-                            	<div class="home_btns m-top-40" id="search">
+                            	<div class="home_btns m-top-40" id="search1">
                                 	<a href="#" class="btn btn-primary btn-xs m-top-20">검색</a>
                             	</div>
-							1234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234
+                            	<div class="home_btns m-top-40" id="search2">
+                                	<a href="#" class="btn btn-primary btn-xs m-top-20">검색22</a>
+                            	</div>                            	
+							</div>
+							<div>
+								<table id="list" border="1"></table>
 							
-															<table id="list"></table>
+								<div id="pager2"></div>
 							</div>
 						</div>
 					</div>

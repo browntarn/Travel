@@ -1,18 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <meta charset="utf-8">
 <title>국내여행</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="favicon.ico">
 <!--Google Font link-->
-<link rel="stylesheet" type="text/css" media="screen" href="/js/jqueryui/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" media="screen" href="/jquery.jqGrid-4.4.3/css/ui.jqgrid.css" />    
-
-<script src="/jquery.jqGrid-4.4.3/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-<script src="/js/jqueryui/jquery-ui.js"></script>
-<script src="/jquery.jqGrid-4.4.3/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
-<script src="/jquery.jqGrid-4.4.3/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/slick/slick.css">
 <link rel="stylesheet" href="/assets/css/slick/slick-theme.css">
@@ -33,6 +26,7 @@
 <!--<link rel="stylesheet" href="assets/css/colors/maron.css">-->
 <!--Theme Responsive css-->
 <link rel="stylesheet" href="/assets/css/responsive.css" />
-<script src="/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
-<!-- <script src="/js/jquery-3.2.1.js"></script> -->
+<script src="assets/js/vendor/jquery-1.11.2.min.js"></script>
+
+<script src="/js/jquery-3.2.1.js"></script>

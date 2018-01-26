@@ -114,6 +114,38 @@ public class apiCommon {
 	}
 	
 	/**
+	 * @param paramUrl : API 호출주소
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public JSONArray getJson(String paramUrl){
+		
+		JSONArray array = null;
+		JSONObject json1 = null;
+		JSONObject json2 = null;
+		
+		try {
+			JSONParser jsonparser = new JSONParser();
+	        JSONObject jsonobject = (JSONObject)jsonparser.parse(readUrlData(paramUrl));
+	        JSONObject json =  (JSONObject) jsonobject.get("response");
+	        array =  (JSONArray) json.get("body");
+/*	        json2 =  (JSONObject) json1.get("items");
+	        array = (JSONArray)json2.get("item");*/
+	        
+	        log.info("######### 목록조회 시작 #########");
+	        log.info("json:"+json);
+	        log.info("json1:"+json1);
+	        log.info("array:"+array);
+	        log.info("######### 목록조회 종료#########");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return array;
+	}	
+	
+	
+	/**
 	 * @param getUrl : API 호출주소
 	 * @return
 	 * @throws Exception

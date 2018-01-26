@@ -125,11 +125,11 @@
 		</dependency>
 		
 		<!-- JSON 사용시 -->
- 		<dependency>
+<!--  		<dependency>
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20171018</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 		    <groupId>com.googlecode.json-simple</groupId>
 		    <artifactId>json-simple</artifactId>
