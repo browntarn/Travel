@@ -7,8 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Service;
 
 import travel.common.Api.apiCommon;
@@ -58,7 +58,7 @@ public class Schedule001ServiceImpl implements Schedule001Service{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectSchdule001ListAjax(Map<String, Object> map) {
+	public List<Map<String, Object>> selectSchdule001ListAjaxEx1(Map<String, Object> map) {
 		String travelUrl = propertiesService.getString("travelUrl");
 		String authenticationKey = propertiesService.getString("authenticationKey");
 		
@@ -87,7 +87,11 @@ public class Schedule001ServiceImpl implements Schedule001Service{
 	}
 
 	@Override
-	public String selectSchdule001ListAjax2(Map<String, Object> map) throws Exception{
+	public String selectSchdule001ListAjax(String param) throws Exception{
+		
+		JSONObject json = JSONObject.fromObject(param);
+		String page = (String) json.get("page");
+		
 		String travelUrl = propertiesService.getString("travelUrl");
 		String authenticationKey = propertiesService.getString("authenticationKey");
 		
@@ -105,12 +109,13 @@ public class Schedule001ServiceImpl implements Schedule001Service{
 		addUrl.append("&arrange=A"); //목록구분 A=제목수, B=조회순, C=수정일순, D=생성일순
 		addUrl.append("&listYN=Y"); //목록구분 Y=목록, N= 개수
 		addUrl.append("&numOfRows=20"); //한페이지 결과수
-		addUrl.append("&pageNo=1"); //한페이지 결과수
+		addUrl.append("&pageNo="+page); //한페이지 결과수
 		addUrl.append("&MobileOS=ETC"); //OS 구분 IOS(아이폰), AND(안드로이드), WIN(윈도우폰), ETC
 		addUrl.append("&MobileApp=TourAPI3.0_Guide"); //서비스명
 		addUrl.append("&_type=json"); //JSON 타입
 		//addUrl.append("&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1");
 		apiCommon apiCommon = new apiCommon();
+		System.out.println("travelUrl+addUrl.toString():"+travelUrl+addUrl.toString());
 		
 		return apiCommon.readUrlData(travelUrl+addUrl.toString());
 	}

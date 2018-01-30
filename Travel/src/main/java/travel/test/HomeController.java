@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,7 +33,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/goAjax1.do", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> goAjax1() throws Exception {
-		Map map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("AA", "1");
 		map.put("BB", "2");
 		map.put("CC", "3");
@@ -43,7 +44,7 @@ public class HomeController {
 	@RequestMapping(value = "/goAjax2.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> goAjax2() throws Exception{
-		Map map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("AA", "1");
 		map.put("BB", "2");
 		return map;
@@ -55,5 +56,5 @@ public class HomeController {
 		mv.addObject("BB", "2");
 		return mv;
 	}		
-	
+
 }

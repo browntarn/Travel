@@ -2,15 +2,21 @@ package travel.schedule.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,20 +59,55 @@ public class Schedule001Controller {
 		return resultMap;
 	}*/
 	
+/*	@RequestMapping(value="/schedule/schedule001ListAjaxEx1.do", method = RequestMethod.POST)
+	@ResponseBody
+	public void schedule001ListAjaxEx1(@RequestParam Map<String, Object> map) throws Exception{
+		System.out.println("userId:"+map.get("userId"));
+		System.out.println("userPass:"+map.get("userPass"));
+		System.out.println("map2:"+map.get("checkValues"));
+		System.out.println("map3:"+map.get("checkValues2"));	
+		
+		String dataList = schedule001Service.selectSchdule001ListAjaxEx1(map);
+		System.out.println("dataList:"+dataList);
+	}*/
+	
 	@RequestMapping(value="/schedule/schedule001ListAjax.do", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject selectSchdule001ListAjax(@RequestParam Map<String, Object> map) throws Exception{
-		String dataList = schedule001Service.selectSchdule001ListAjax2(map);
-		JSONObject json = new JSONObject();
-		json.put("dataList", dataList);
-		return json;
-	}
-	
-	@RequestMapping(value="/schedule/schedule001ListAjax2.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String selectSchdule001ListAjax2(@RequestParam Map<String, Object> map) throws Exception{
-		String dataList = schedule001Service.selectSchdule001ListAjax2(map);
+	public String selectSchdule001ListAjax(@RequestBody String param) throws Exception{
+		System.out.println("param11:"+param);
+		
+/*		JSONObject json1 = JSONObject.fromObject(param);
+		System.out.println("json1:"+json1.get("userId"));
+		System.out.println("json1:"+json1.get("checkValues"));
+		JSONArray jsonArray = new JSONArray();
+		jsonArray = (JSONArray) json1.get("checkValues");
+		for(int i=0; i<jsonArray.size(); i++){
+			System.out.println("jsonArray:"+jsonArray.get(i));
+		}
+		*/
+		String dataList = schedule001Service.selectSchdule001ListAjax(param);
 		System.out.println("dataList:"+dataList);
 		return dataList;
-	}	
+	}
+	
+/*	@RequestMapping(value="/schedule/schedule001ListAjax3.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String selectSchdule001ListAjax3(@RequestBody String param) throws Exception{
+		
+		System.out.println("param11:"+param);
+		
+		JSONObject json1 = JSONObject.fromObject(param);
+		System.out.println("json1:"+json1.get("userId"));
+		System.out.println("json1:"+json1.get("checkValues"));
+		JSONArray jsonArray = new JSONArray();
+		jsonArray = (JSONArray) json1.get("checkValues");
+		for(int i=0; i<jsonArray.size(); i++){
+			System.out.println("jsonArray:"+jsonArray.get(i));
+		}
+		
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		String dataList = schedule001Service.selectSchdule001ListAjax2(map2);
+		System.out.println("dataList:"+dataList);
+		return dataList;
+	}	*/
 }

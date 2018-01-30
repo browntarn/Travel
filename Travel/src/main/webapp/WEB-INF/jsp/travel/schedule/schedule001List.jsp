@@ -31,6 +31,10 @@ $(document).ready(function($){
 		e.preventDefault();
 		fn_selectList2($);
 	});
+	$("#search3").on("click", function(e){
+		e.preventDefault();
+		fn_selectList3($);
+	});	
 	//setGrid2($);
 	//setGrid3($);
 	//fn_selectList($);
@@ -66,11 +70,28 @@ $(document).ready(function($){
 } */
 
 function fn_selectList1($){
+	
+    var userId = $("#userId").val();
+    var userPass = $("#userPass").val();
+    
+    // name이 같은 체크박스의 값들을 배열에 담는다.
+	var checkValues = [];
+	var checkValues2 = [];
+	$("input[name='hobboy']:checked").each(function(i){
+		checkValues.push($(this).val());
+	});
+	
+	$("input[name='sports']:checked").each(function(i){
+		checkValues2.push($(this).val())
+	});
+	
+	var allData = {"userId":userId, "userPass":userPass, "checkValues":checkValues, "checkValues2":checkValues2};
  
 	$("#list").jqGrid({
-		url : "<c:url value='/schedule/schedule001ListAjax2.do'/>",
+		url : "<c:url value='/schedule/schedule001ListAjaxEx1.do'/>",
 		mtype : "POST",
-		datatype : "json",
+		data : allData,
+		async : false,
 	 	colNames:[
 		         '순번',
 		         '지역',
@@ -104,11 +125,31 @@ function fn_selectList1($){
 } 
  
 function fn_selectList2($){
+
+    var userId = $("#userId").val();
+    var userPass = $("#userPass").val();
+    var page = $("#page").val();
+    
+    // name이 같은 체크박스의 값들을 배열에 담는다.
+	var checkValues = new Array();
+	var checkValues2 = new Array();
+	$("input[name='hobboy']:checked").each(function(i){
+		checkValues.push($(this).val());
+	});
+	
+	$("input[name='sports']:checked").each(function(i){
+		checkValues2.push($(this).val())
+	});
+	
+	var allData = {"userId":userId, "userPass":userPass, "page":page, "checkValues":checkValues, "checkValues2":checkValues2};
+	//var allData = $("#listForm").serialize();
+	
 	$.ajax({
+		url : "<c:url value='/schedule/schedule001ListAjax.do'/>",
 		type : "POST",
-		url : "<c:url value='/schedule/schedule001ListAjax2.do'/>",
-		dataType : "json",
-		loadtext : '로딩중..',
+		data : JSON.stringify(allData),	//서버에 전송할 데이터
+		dataType : "json",				//서버로부터 수신할 데이터 타입
+		loadtext : '로딩중..',			
 		contentType : "application/json; charset=UTF-8",
 		async : false,
 		success : function (data, status, xhr){
@@ -122,7 +163,6 @@ function fn_selectList2($){
 			console.log("data4:"+listData[0].contentid);
 			
 			$("#list").jqGrid({
-				datatype : "json",
 			 	colNames:[
 				         '순번',
 				         '지역',
@@ -160,109 +200,109 @@ function fn_selectList2($){
 				ajaxGridOptions: { contentType: "application/json", cache: true },	  */ 			   	
 			   	pager: '#pager2',
 			    viewrecords: true,
-			   	caption: "Manipulating Array Data",
+			   	caption: "Manipulating Array Data", 					   	
 			});
-			$("#list").clearGridData();
+ 			$("#list").clearGridData();
    			for(var i=0;i<=listData.length;i++){
 		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
 		         $("#list").jqGrid('addRowData',i+1,listData[i]);
-		 	}   
-		 	
- 			//$("#list").jqGrid('setGridParam', { data : listData });
-			$("#list").trigger('reloadGrid'); 
+		 	}    
+			$("#list").trigger('reloadGrid');
 		}
 	});
 }
 
 function fn_selectList3($){
+	
+    var userId = $("#userId").val();
+    var userPass = $("#userPass").val();
+    
+    // name이 같은 체크박스의 값들을 배열에 담는다.
+	var checkValues = new Array();
+	var checkValues2 = new Array();
+	$("input[name='hobboy']:checked").each(function(i){
+		checkValues.push($(this).val());
+	});
+	
+	$("input[name='sports']:checked").each(function(i){
+		checkValues2.push($(this).val())
+	});
+	
+	//var allData = {"userId":userId, "userPass":userPass, "checkValues":checkValues, "checkValues2":checkValues2};
+	var allData = $("#listForm").serialize();
+	
 	$.ajax({
+		url : "<c:url value='/schedule/schedule001ListAjax3.do'/>",
 		type : "POST",
-		url : "<c:url value='/schedule/schedule001ListAjax2.do'/>",
+		data : JSON.stringify(allData),
 		dataType : "json",
 		loadtext : '로딩중..',
 		contentType : "application/json; charset=UTF-8",
 		async : false,
 		success : function (data, status, xhr){
-			console.log("data:"+data);
+			console.log("data:"+JSON.stringify(data));
 			console.log("data1:"+data.response.body.items.item);
 			var listData = data.response.body.items.item;
 			console.log("listData:"+listData);
-			console.log("listData[0]:"+listData[0]);
-			console.log("data2:"+listData.length);
-			console.log("data3:"+listData[0].eventenddate);
-			console.log("data4:"+listData[0].contentid);
 			
-  			for(var i=0;i<=listData.length;i++){
+			$("#list").jqGrid({
+			 	colNames:[
+				         '순번',
+				         '지역',
+				         '시군구',
+				         '주제',
+				         '주소',
+				         '전화번호',
+				         '위치'
+				         ],
+				colModel:[
+				          { name : 'seq', 			index:'seq', 			width :100},
+				          { name: 'areacode', 		index:'areacode', 		width: 100},
+				          { name: 'sigungucode', 	index:'sigungucode', 	width: 100},
+				          { name: 'title', 			index:'title',	 		width: 150},
+				          { name: 'addr1', 			index:'addr1', 			width: 150},
+				          { name: 'tel', 			index:'tel', 			width: 150},				          
+				          { name: 'map', 			index:'map', 			width: 100},
+				          ],
+		  	   	rowNum : 10,
+		  	   	autowidth : true,
+		  	   	gridview :  true,
+			   	rowList:[10,20,30],
+/* 		  	   	loadBeforeSend: function(jqXHR) {
+					jqXHR.setRequestHeader('X-ZUMO-APPLICATION', 'myKey');
+		          	},
+				loadComplete: function () {
+		          		//alert("OK");
+		    		},
+				loadError: function (jqXHR, textStatus, errorThrown) {
+		                                      alert('HTTP status code: ' + jqXHR.status + '\n' +
+		                                      'textStatus: ' + textStatus + '\n' +
+		                                      'errorThrown: ' + errorThrown);
+		                                       alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+		                               },
+				ajaxGridOptions: { contentType: "application/json", cache: true },	  */ 			   	
+			   	pager: '#pager2',
+			    viewrecords: true,
+			   	caption: "Manipulating Array Data", 					   	
+			});
+ 			$("#list").clearGridData();
+   			for(var i=0;i<=listData.length;i++){
 		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
 		         $("#list").jqGrid('addRowData',i+1,listData[i]);
-		 	} 
-/* 			$("#list").jqGrid('setGridParam', { data : listData });
-			$("#list").trigger('reloadGrid'); */
+		 	}    
+			$("#list").trigger('reloadGrid');
+			
+			var json_data = JSON.stringify(data);
+			var parse_data = JSON.parse(json_data);
 		}
 	});
 }
-/* 
-/* function setGrid($){
-	$("#jqGrid").jqGrid({
-		datatype : "json",
-	 	colName:[
-		         '순번',
-		         '지역',
-		         '시군구',
-		         '주제',
-		         '주소',
-		         '위치'
-		         ],
-		colModel:[
-		          { name : 'seq', index:'seq', width :30},
-		          { name: 'area', index:'area', width: 30},
-		          { name: 'sigungu', index:'sigungu', width: 30},
-		          { name: 'title', index:'title', width: 150},
-		          { name: 'addr', index:'addr', width: 150},
-		          { name: 'map', index:'map', width: 50},
-		          ],
-		viewrecords : true,
-		width : 780,
-		height : 200,
-		rowNum : 10,
-		autowidth : true,
-		multiselect : true,
-		rowList : [10,20,30],
-		caption : "리스트목록"
-	})
-}
-
-function fn_selectList($){
-	alert("11");
-	$.ajax({
-		type : "POST",
-		url : "<c:url value='/schedule/schedule001ListAjax.do'/>",
-		dataType : "json",
-		jsonReader:{
-			repeatitems:false,
-			root : "items",
-			total : "totalCount"
-		},
-		loadtext : '로딩중..',
-		contentType : "application/json; charset=UTF-8",
-		async : false,
-		success : function (data, status, xhr){
-			console.log(data);
-
-			
-		}
-	})
-} */
 
 </script>
 </head>
 <div class="content">
 	<div class="container">
 		<form:form id="listForm" name="listForm" method="post">
-			<input type="hidden" id="userId=" value="test">
-			<input type="checkbox" name="hoobby" value="독서">
-			<input type="checkbox" name="hobboy" value="운동">
-			<input type="checkbox" name="hobboy" value="전시관람">
 			<div id="content_pop">
 				<!-- 타이틀 -->
 				<div id="title">
@@ -280,12 +320,30 @@ function fn_selectList($){
 					<div class="item active">
 						<div class="container">
 							<div class="row">
-                            	<div class="home_btns m-top-40" id="search1">
+								<input type="hidden" name="userId" id="userId" value="test">
+								<input type="hidden" name="userPass" id="userPass" value="a12345">
+<!-- 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="영어">
+								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="수학">
+								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="과학"> -->
+								<input type="checkbox" name="hobboy" id="hobboy" value="영어">
+								<input type="checkbox" name="hobboy" id="hobboy" value="수학">
+								<input type="checkbox" name="hobboy" id="hobboy" value="과학">		
+								<input type="text" name="page" id="page">					
+							
+<!--                             	<div class="home_btns m-top-40" id="search1">
                                 	<a href="#" class="btn btn-primary btn-xs m-top-20">검색</a>
-                            	</div>
-                            	<div class="home_btns m-top-40" id="search2">
-                                	<a href="#" class="btn btn-primary btn-xs m-top-20">검색22</a>
-                            	</div>                            	
+                            	</div> -->
+                            	<input type="button" name="search1" id="search1" value="전송">     
+                            	<input type="button" name="search2" id="search2" value="전송">                           
+                            	<input type="button" name="search3" id="search3" value="전송">      	
+								<div>
+<!-- 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="축구">
+									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="농구">
+									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="야구"> -->
+									<input type="checkbox" name="sports" id="sports" value="축구">
+									<input type="checkbox" name="sports" id="sports" value="농구">
+									<input type="checkbox" name="sports" id="sports" value="야구">									
+								</div>                            										
 							</div>
 							<div>
 								<table id="list" border="1"></table>

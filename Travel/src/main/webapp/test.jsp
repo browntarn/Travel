@@ -83,6 +83,62 @@ function goAjax4(){
 	});
 }
 
+function goAjax5(){
+	
+	var checkValues = new Array();
+	$("input[name='type']:checked").each(function(){
+		checkValues.push($(this).val());
+	});
+	
+	var data = {};
+	data["userId"] = $("#userId").val();
+	data["userPass"] = $("#userPass").val();
+	data["type"] = checkValues;
+	
+ 	$.ajax({
+		type: "POST",
+		url : "<c:url value='/goAjax5.do' />",
+		data : JSON.stringify(data),
+		dataType: "json",
+		contentType:"application/json;charset=UTF-8",
+		async: false,
+		success : function(data, status, xhr) {
+			console.log(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("error= " + errorThrown);
+		}
+	});
+}
+
+function goAjax6(){
+	
+	var checkValues = new Array();
+	$("input[name='type']:checked").each(function(){
+		checkValues.push($(this).val());
+	});
+	
+	var data = {};
+	data["userId"] = $("#userId").val();
+	data["userPass"] = $("#userPass").val();
+	data["type"] = checkValues;
+	
+ 	$.ajax({
+		type: "POST",
+		url : "<c:url value='/goAjax6.do' />",
+		data : JSON.stringify(data),
+		dataType: "json",
+		contentType:"application/json;charset=UTF-8",
+		async: false,
+		success : function(data, status, xhr) {
+			console.log(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("error= " + errorThrown);
+		}
+	});
+}
+
 //]]>
 </script>
 </head>
@@ -91,13 +147,18 @@ function goAjax4(){
 <h3>Spring Framework - Ajax</h3>
 <div style="margin-bottom:10px;">
 	<form id="fm" name="fm" method="post">
-	<input type="hidden" name="AA" id="AA">
-	<input type="hidden" name="BB" id="BB">
+	<input type="hidden" name="userId" id="userId" value="test1234">
+	<input type="hidden" name="userPass" id="userPass" value="pass1234">
+	축구:<input type="checkbox" name="type" id="type" value="축구">
+	야구:<input type="checkbox" name="type" id="type" value="야구">
+	농구:<input type="checkbox" name="type" id="type" value="농구">
 	</form>
 	<button onclick="goAjax1();">goAjax1</button>
 	<button onclick="goAjax2();">goAjax2</button>
 	<button onclick="goAjax3();">goAjax3</button>
 	<button onclick="goAjax4();">goAjax4</button>
+	<button onclick="goAjax5();">goAjax5</button>
+	<button onclick="goAjax6();">goAjax5</button>
 </div>
 </body>
 </html>
