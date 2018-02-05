@@ -118,10 +118,7 @@ function goAjax6(){
 		checkValues.push($(this).val());
 	});
 	
-	var data = {};
-	data["userId"] = $("#userId").val();
-	data["userPass"] = $("#userPass").val();
-	data["type"] = checkValues;
+	var data = {"userId": $("#userId").val(), "userPass":$("#userPass").val(), "type":checkValues }; 
 	
  	$.ajax({
 		type: "POST",
@@ -158,7 +155,7 @@ function goAjax6(){
 	<button onclick="goAjax3();">goAjax3</button>
 	<button onclick="goAjax4();">goAjax4</button>
 	<button onclick="goAjax5();">goAjax5</button>
-	<button onclick="goAjax6();">goAjax5</button>
+	<button onclick="goAjax6();">goAjax6</button>
 </div>
 </body>
 </html>

@@ -13,14 +13,23 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**   
+* @Title: apiCommon.java 
+* @Package travel.common.Api 
+* @Description: TODO(설명) 
+* @author 김성우  
+* @date 2018. 1. 31. 
+* @version V1.0   
+*/ 
 public class apiCommon {
 	Logger log = Logger.getLogger(this.getClass());
 	/**
@@ -168,4 +177,59 @@ public class apiCommon {
                 reader.close();
         }
     }
+	
+	/**
+	 * @param param : Json 조회조건
+	 * @param travelUrl : 여행정보 URL
+	 * @param authenticationKey : api 인증키
+	 * @return
+	 * @throws Exception
+	 */
+	public String selectSchdule(String param, String travelUrl, String authenticationKey) throws Exception{
+		
+		JSONObject json = JSONObject.fromObject(param);
+		
+		StringBuffer addUrl = new StringBuffer();
+		addUrl.append(authenticationKey);  //인증키번호
+		//addUrl.append("&categoryCode="); //서비스 분류코드 조회
+		//addUrl.append("&areaBasedList="); //지역기반 관광정보 조회
+		//addUrl.append("&locationBasedList="); //위치기반 관광정보 조회		
+		//addUrl.append("&searchKeyword="); //키워드 검색 조회
+		//addUrl.append("&searchFestival="); //행사정보 조회
+		//addUrl.append("&searchStay="); //숙박정보 조회
+		addUrl.append("&areaCode="+(String) json.get("areaCode"));//지역번호 조회
+		addUrl.append("&sigunguCode="+(String) json.get("sigunguCode")); //시구군
+		addUrl.append("&arrange=A"); //목록구분 A=제목수, B=조회순, C=수정일순, D=생성일순
+		addUrl.append("&listYN=Y"); //목록구분 Y=목록, N= 개수
+		addUrl.append("&numOfRows=20"); //한페이지 결과수
+		addUrl.append("&pageNo="+(String) json.get("page")); //한페이지 결과수
+		addUrl.append("&MobileOS=ETC"); //OS 구분 IOS(아이폰), AND(안드로이드), WIN(윈도우폰), ETC
+		addUrl.append("&MobileApp=TourAPI3.0_Guide"); //서비스명
+		addUrl.append("&_type=json"); //JSON 타입
+		//addUrl.append("&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1");
+		System.out.println("travelUrl+addUrl.toString():"+travelUrl+addUrl.toString());	
+		
+		return readUrlData(travelUrl+addUrl.toString());
+	}
+	
+	/**
+	 * @param areaCodeUrl : 지역코드 URL
+	 * @param authenticationKey : api 인증키
+	 * @param areaCode : 지역코드없을경우 전체지역
+	 *                   지역코드 있을경우 시군구 코드 불러오기
+	 * @return
+	 * @throws Exception
+	 */
+	public String commonAreaCode(String areaCodeUrl, String authenticationKey, String areaCode) throws Exception{
+		StringBuffer addUrl = new StringBuffer();
+		addUrl.append(authenticationKey); 
+		addUrl.append("&areaCode="+areaCode);
+		addUrl.append("&numOfRows=30");
+		addUrl.append("&pageNo=1");
+		addUrl.append("&MobileOS=ETC"); 
+		addUrl.append("&MobileApp=TourAPI3.0_Guide"); 
+		addUrl.append("&_type=json"); 
+		System.out.println("areaCodeUrl+addUrl.toString():"+areaCodeUrl+addUrl.toString());	
+		return readUrlData(areaCodeUrl+addUrl.toString());
+	}
 }

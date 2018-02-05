@@ -9,7 +9,7 @@
     padding-bottom: 70px;
     position: relative;
     padding-top: 150px;
-    width:100%;
+    width:90%;
 }
 
 .port_item{
@@ -94,7 +94,7 @@ $(document).ready(function(){
 				<input type="button" name="btn1" value="조회POST">
 				<input type="button" name="btn2" value="조회GET">
 			</div>
-			<div class="main_product roomy-80">
+			<div class="main_product roomy-40">
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
 						<div class="container">

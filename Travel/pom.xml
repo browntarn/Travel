@@ -12,7 +12,10 @@
 	<properties>
 	    <spring.maven.artifact.version>4.3.4.RELEASE</spring.maven.artifact.version>
 		<egovframework.rte.version>3.5.0</egovframework.rte.version>
-		<tiles.version>3.0.5</tiles.version>				
+		<tiles.version>3.0.5</tiles.version>		
+		<dataformat.yaml.version>2.9.0</dataformat.yaml.version> 
+		<slf4j.version>1.7.25</slf4j.version> 
+		<log4j.version>2.9.0</log4j.version>
 	</properties>
 
 	<repositories>
@@ -194,6 +197,25 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
+        
+        <!-- log4j2 setting  -->
+ 		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j2.version}</version>
+  		</dependency>
+
+  		<!-- Log4j API and Core implementation required for binding -->
+ 		<dependency>	
+			<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-api</artifactId>
+    		<version>${log4j2.version}</version>
+ 			</dependency>
+ 		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-core</artifactId>
+    		<version>${log4j2.version}</version>
+ 		</dependency>
         
 <!--         <dependency>
             <groupId>com.oracle</groupId>

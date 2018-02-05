@@ -5,6 +5,28 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <style>
+.content {
+    min-height: 300px;
+    padding-bottom: 70px;
+    position: relative;
+    padding-top: 150px;
+    width:100%;
+}
+
+.container{
+	/* width:90%; */
+}
+
+.port_item{
+	min-height:220px;
+	width:90%;
+}
+.port_img > img{
+	height:150px;
+	width:80px;
+}
+
+
 .btn{
 	font-size:12px;
 	padding:14px;
@@ -22,7 +44,8 @@
 
 // jquery 버전충돌시 function($) 를 넣어준다
 $(document).ready(function($){
-	//setGrid($);
+	setGrid($);
+	setAreaCode($);
 	$("#search1").on("click", function(e){
 		e.preventDefault();
 		fn_selectList1($);
@@ -35,15 +58,11 @@ $(document).ready(function($){
 		e.preventDefault();
 		fn_selectList3($);
 	});	
-	//setGrid2($);
-	//setGrid3($);
-	//fn_selectList($);
 });
 
-/* function setGrid($){
-	$("#list").jqGrid({
+function setGrid($){
+	$("#JqGrid").jqGrid({
 	 	colNames:[
-		         '순번',
 		         '지역',
 		         '시군구',
 		         '주제',
@@ -52,22 +71,24 @@ $(document).ready(function($){
 		         '위치'
 		         ],
 		colModel:[
-		          { name : 'seq', 			index:'seq', 			width :100},
-		          { name: 'areacode', 		index:'areacode', 		width: 100},
-		          { name: 'sigungucode', 	index:'sigungucode', 	width: 100},
-		          { name: 'title', 			index:'title',	 		width: 150},
-		          { name: 'addr1', 			index:'addr1', 			width: 150},
-		          { name: 'tel', 			index:'tel', 			width: 150},				          
-		          { name: 'map', 			index:'map', 			width: 100},
+		          { name:'areacode', 		index:'areacode', 		width:100 },
+		          { name:'sigungucode', 	index:'sigungucode', 	width:100 },
+		          { name:'title', 			index:'title',	 		width:200 },
+		          { name:'addr1', 			index:'addr1', 			width:250 },
+		          { name:'tel', 			index:'tel', 			width:150 },				          
+		          { name:'map', 			index:'map', 			width:100 },
 		          ],
   	   	rowNum : 10,
   	   	autowidth : true,
   	   	gridview :  true,
 	   	rowList:[10,20,30],
-	    viewrecords: true,
-	   	caption: "setGrid",
+	   	rownumbers : true,
+	   	height : "220",		   	
+	   	pager: '#listData',
+	    viewrecords: false,
+	   	caption: "여행정보 목록", 					   	
 	});
-} */
+} 
 
 function fn_selectList1($){
 	
@@ -128,6 +149,8 @@ function fn_selectList2($){
 
     var userId = $("#userId").val();
     var userPass = $("#userPass").val();
+    var areaCode = $("#areaCode").val();
+    var sigunguCode = $("#sigunguCode").val();
     var page = $("#page").val();
     
     // name이 같은 체크박스의 값들을 배열에 담는다.
@@ -141,7 +164,15 @@ function fn_selectList2($){
 		checkValues2.push($(this).val())
 	});
 	
-	var allData = {"userId":userId, "userPass":userPass, "page":page, "checkValues":checkValues, "checkValues2":checkValues2};
+	var allData = {
+			"userId":userId, 
+			"userPass":userPass,
+			"areaCode":areaCode,
+			"sigunguCode":sigunguCode,
+			"page":page, 
+			"checkValues":checkValues, 
+			"checkValues2":checkValues2
+	};
 	//var allData = $("#listForm").serialize();
 	
 	$.ajax({
@@ -162,52 +193,12 @@ function fn_selectList2($){
 			console.log("data3:"+listData[0].eventenddate);
 			console.log("data4:"+listData[0].contentid);
 			
-			$("#list").jqGrid({
-			 	colNames:[
-				         '순번',
-				         '지역',
-				         '시군구',
-				         '주제',
-				         '주소',
-				         '전화번호',
-				         '위치'
-				         ],
-				colModel:[
-				          { name : 'seq', 			index:'seq', 			width :100},
-				          { name: 'areacode', 		index:'areacode', 		width: 100},
-				          { name: 'sigungucode', 	index:'sigungucode', 	width: 100},
-				          { name: 'title', 			index:'title',	 		width: 150},
-				          { name: 'addr1', 			index:'addr1', 			width: 150},
-				          { name: 'tel', 			index:'tel', 			width: 150},				          
-				          { name: 'map', 			index:'map', 			width: 100},
-				          ],
-		  	   	rowNum : 10,
-		  	   	autowidth : true,
-		  	   	gridview :  true,
-			   	rowList:[10,20,30],
-/* 		  	   	loadBeforeSend: function(jqXHR) {
-					jqXHR.setRequestHeader('X-ZUMO-APPLICATION', 'myKey');
-		          	},
-				loadComplete: function () {
-		          		//alert("OK");
-		    		},
-				loadError: function (jqXHR, textStatus, errorThrown) {
-		                                      alert('HTTP status code: ' + jqXHR.status + '\n' +
-		                                      'textStatus: ' + textStatus + '\n' +
-		                                      'errorThrown: ' + errorThrown);
-		                                       alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
-		                               },
-				ajaxGridOptions: { contentType: "application/json", cache: true },	  */ 			   	
-			   	pager: '#pager2',
-			    viewrecords: true,
-			   	caption: "Manipulating Array Data", 					   	
-			});
- 			$("#list").clearGridData();
+ 			$("#JqGrid").clearGridData();
    			for(var i=0;i<=listData.length;i++){
 		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
-		         $("#list").jqGrid('addRowData',i+1,listData[i]);
+		         $("#JqGrid").jqGrid('addRowData',i+1,listData[i]);
 		 	}    
-			$("#list").trigger('reloadGrid');
+			$("#JqGrid").trigger('reloadGrid');
 		}
 	});
 }
@@ -245,7 +236,7 @@ function fn_selectList3($){
 			var listData = data.response.body.items.item;
 			console.log("listData:"+listData);
 			
-			$("#list").jqGrid({
+			$("#JqGrid").jqGrid({
 			 	colNames:[
 				         '순번',
 				         '지역',
@@ -285,15 +276,70 @@ function fn_selectList3($){
 			    viewrecords: true,
 			   	caption: "Manipulating Array Data", 					   	
 			});
- 			$("#list").clearGridData();
+ 			$("#JqGrid").clearGridData();
    			for(var i=0;i<=listData.length;i++){
 		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
-		         $("#list").jqGrid('addRowData',i+1,listData[i]);
+		         $("#JqGrid").jqGrid('addRowData',i+1,listData[i]);
 		 	}    
-			$("#list").trigger('reloadGrid');
+			$("#JqGrid").trigger('reloadGrid');
 			
 			var json_data = JSON.stringify(data);
 			var parse_data = JSON.parse(json_data);
+		}
+	});
+}
+
+function setAreaCode($){
+	
+	var $target = $("select[name='areaCode']");
+	$.ajax({
+		type : "POST",
+		url : "<c:url value='/common/selectAreaCode.do'/>",
+		contentType:"application/json;charset=UTF-8",
+		dataType : "json",
+		async: false,
+		success : function(data){
+			var listData = data.response.body.items.item;
+			if(listData.length > 0){
+				$.each(listData, function(i, val){
+					$target.append("<option value='"+listData[i].code+"'>"+listData[i].name+"</option>");
+				});
+			}
+		}, 
+		error: function(xhr, textStatus, errorThrown) {
+			console.log(xhr.responseText);
+			alert("error= " + errorThrown);
+		}
+	});
+}
+
+function selectSigungu(val){
+	
+	var $target = $("select[name='sigunguCode']");
+	var allData = {
+			"areaCode" : $("#areaCode").val()
+	}
+	$target.empty();
+	$target.append("<option value=''>전체</option>");
+	
+	$.ajax({
+		type : "POST",
+		url : "<c:url value='/common/selectSigunguCode.do'/>",
+		data : JSON.stringify(allData),
+		contentType : "application/json; charset=UTF-8",
+		dataType : "json",
+		async : false,
+		success : function(data){
+			var listData = data.response.body.items.item;
+			if(listData.length > 0){
+				$.each(listData, function(i, val){
+					$target.append("<option value='"+listData[i].code+"'>"+listData[i].name+"</option>");
+				});
+			}
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			console.log(xhr.responseText);
+			alert("error= " + errorThrown);
 		}
 	});
 }
@@ -315,45 +361,49 @@ function fn_selectList3($){
 				</div>
 			</div>
 			<!-- /List -->
-			<div class="main_product roomy-80">
-				<div class="carousel-inner" role="listbox">
-					<div class="item active">
-						<div class="container">
-							<div class="row">
-								<input type="hidden" name="userId" id="userId" value="test">
-								<input type="hidden" name="userPass" id="userPass" value="a12345">
+			<div class="main_product roomy-40">
+				<div class="item active">
+					<div class="container">
+						<div class="row">
+							지역 : 
+							<select name="areaCode" id="areaCode" onChange="selectSigungu(this.value);" style="width:100px">
+								<option>선택</option>
+							</select>
+							<select name="sigunguCode" id="sigunguCode" style="width:100px">
+								<option>선택</option>
+							</select>							
+							<input type="hidden" name="userId" id="userId" value="test">
+							<input type="hidden" name="userPass" id="userPass" value="a12345">
 <!-- 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="영어">
 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="수학">
 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="과학"> -->
-								<input type="checkbox" name="hobboy" id="hobboy" value="영어">
-								<input type="checkbox" name="hobboy" id="hobboy" value="수학">
-								<input type="checkbox" name="hobboy" id="hobboy" value="과학">		
-								<input type="text" name="page" id="page">					
-							
+							<input type="checkbox" name="hobboy" id="hobboy" value="영어">
+							<input type="checkbox" name="hobboy" id="hobboy" value="수학">
+							<input type="checkbox" name="hobboy" id="hobboy" value="과학">		
+							<input type="text" name="page" id="page">					
+						
 <!--                             	<div class="home_btns m-top-40" id="search1">
                                 	<a href="#" class="btn btn-primary btn-xs m-top-20">검색</a>
                             	</div> -->
-                            	<input type="button" name="search1" id="search1" value="전송">     
-                            	<input type="button" name="search2" id="search2" value="전송">                           
-                            	<input type="button" name="search3" id="search3" value="전송">      	
-								<div>
+                           	<input type="button" name="search1" id="search1" value="전송">     
+                           	<input type="button" name="search2" id="search2" value="조회">                           
+                           	<input type="button" name="search3" id="search3" value="전송">      	
+							<div>
 <!-- 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="축구">
 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="농구">
 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="야구"> -->
-									<input type="checkbox" name="sports" id="sports" value="축구">
-									<input type="checkbox" name="sports" id="sports" value="농구">
-									<input type="checkbox" name="sports" id="sports" value="야구">									
-								</div>                            										
+								<input type="checkbox" name="sports" id="sports" value="축구">
+								<input type="checkbox" name="sports" id="sports" value="농구">
+								<input type="checkbox" name="sports" id="sports" value="야구">									
 							</div>
 							<div>
-								<table id="list" border="1"></table>
-							
-								<div id="pager2"></div>
-							</div>
-						</div>
+								<table id="JqGrid" border="1"></table>
+							</div>                      
+							<div id="listData"></div>      										
+						</div>						
 					</div>
 				</div>
-			</div>
+			</div>	
 		</form:form>
 	</div>
 </div>         

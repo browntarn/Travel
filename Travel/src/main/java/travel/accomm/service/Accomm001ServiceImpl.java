@@ -81,6 +81,7 @@ public class Accomm001ServiceImpl implements Accomm001Service{
 		//addUrl.append("&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1");
 		
 		apiCommon apiCommon = new apiCommon();
-		return apiCommon.getJsonFromUrl(travelUrl+addUrl.toString());
+		//return apiCommon.getJsonFromUrl(travelUrl+addUrl.toString());
+		return "";
 	}
 }
