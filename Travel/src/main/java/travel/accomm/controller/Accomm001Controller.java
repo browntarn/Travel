@@ -37,7 +37,7 @@ public class Accomm001Controller {
 	 * @return "selectAccomm001List"
 	 * @exception Exception
 	 */	
-	@RequestMapping(value="/accomm/accomm001List.do")
+	@RequestMapping(value="/accomm/accomm001List")
 	//public ModelAndView selectAccomm001List(@RequestParam Map<String, Object> map) throws Exception{
 	public ModelAndView selectAccomm001List(ModelMap map) throws Exception{
 		ModelAndView mv = new ModelAndView();
@@ -47,7 +47,7 @@ public class Accomm001Controller {
 		return mv;
 	}
 	
-	@RequestMapping(value="/accomm/accomm001ListAjax.do", method = RequestMethod.POST)
+	@RequestMapping(value="/accomm/accomm001ListAjax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> accomm001ListAjax(@RequestParam Map<String, String> paramMap) throws Exception{
 		System.out.println("paramMap:"+paramMap.get("aa"));
@@ -57,7 +57,7 @@ public class Accomm001Controller {
 	    return map;
     }
 	
-	@RequestMapping(value="/accomm/accomm001ListAjax2.do", method = RequestMethod.GET)
+	@RequestMapping(value="/accomm/accomm001ListAjax2", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> searchGet(@RequestParam Map<String, String> paramMap) throws Exception {
 		System.out.println("paramMap:"+paramMap.get("aa"));
 	    Map map = new HashMap<String, String>();

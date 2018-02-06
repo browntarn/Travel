@@ -81,6 +81,14 @@
         </property>
     </bean>
 	<!-- /For Pagination Tag -->
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	    <property name="alwaysUseFullPath" value="true">
+	</property></bean>
+	 
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	    <property name="alwaysUseFullPath" value="true">
+	</property></bean>	
 
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
 </beans>

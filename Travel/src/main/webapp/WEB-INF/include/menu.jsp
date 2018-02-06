@@ -85,10 +85,11 @@
 						<li><a href="#features">About</a></li>
 						<li><a href="#business">Service</a></li>
 						<li><a href="#work">Portfolio</a></li>
-	                    <li><a href="/schedule/scheduleList.do">국내여행Ori</a></li>
-	                    <li><a href="/schedule/schdule001List.do">국내여행</a></li>
-	                    <li><a href="/accomm/accomm001List.do">숙박</a></li>
-						<li><a href="#contact">Contact</a></li>
+	                    <li><a href="/schedule/scheduleList">국내여행Ori</a></li>
+	                    <li><a href="/schedule/schdule001List">국내여행</a></li>
+	                    <li><a href="/accomm/accomm001List">숙박</a></li>
+	                    <li><a href="/notice/notice001List">게시판</a></li>
+						<li><a href="#contact">공지사항</a></li>
 						<li><a href="/2017.jsp">메인</a></li>
 					</ul>
 				</div>

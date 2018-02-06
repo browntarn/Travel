@@ -16,11 +16,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import travel.common.controller.CommonController;
 
 /**   
 * @Title: apiCommon.java 
@@ -31,7 +34,7 @@ import org.w3c.dom.NodeList;
 * @version V1.0   
 */ 
 public class apiCommon {
-	Logger log = Logger.getLogger(this.getClass());
+	private static final Logger logger = LogManager.getLogger(CommonController.class);
 	/**
 	 * @param XML Parsing 주소 데이터 출력
 	 * @return
@@ -48,16 +51,16 @@ public class apiCommon {
 			Document doc = parseXML(connection.getInputStream());
 			NodeList descNodes = doc.getElementsByTagName("item");
 			
-			log.info("######### 목록조회 시작 #########");
+			logger.info("######### 목록조회 시작 #########");
 			for(int i=0; i<descNodes.getLength(); i++){
 				resultMap = new HashMap<String, Object>();
 				for(Node node = descNodes.item(i).getFirstChild(); node!=null; node=node.getNextSibling()){
 					resultMap.put(node.getNodeName(), node.getTextContent());
 				}
-				log.info("resultMap:"+resultMap);
+				logger.info("resultMap:"+resultMap);
 				resultList.add(resultMap);
 			}
-			log.info("######### 목록조회 종료#########");
+			logger.info("######### 목록조회 종료#########");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,7 +104,7 @@ public class apiCommon {
 	        JSONObject json2 =  (JSONObject) json1.get("items");
 	        JSONArray array = (JSONArray)json2.get("item");
 	        
-	        log.info("######### 목록조회 시작 #########");
+	        logger.info("######### 목록조회 시작 #########");
 	        for(int i=0; i<array.size(); i++){
 	        	JSONObject tmp = (JSONObject)array.get(i);
 	        	resultMap = new HashMap<String, Object>();
@@ -110,11 +113,11 @@ public class apiCommon {
 	        		String key = (String)iterator.next();
 	        		resultMap.put(key, tmp.get(key));
 	        	}
-	        	log.info("resultMap:"+resultMap);
+	        	logger.info("resultMap:"+resultMap);
 	        	resultList.add(resultMap);
 	        	
 	        }
-	        log.info("######### 목록조회 종료#########");
+	        logger.info("######### 목록조회 종료#########");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,11 +144,11 @@ public class apiCommon {
 /*	        json2 =  (JSONObject) json1.get("items");
 	        array = (JSONArray)json2.get("item");*/
 	        
-	        log.info("######### 목록조회 시작 #########");
-	        log.info("json:"+json);
-	        log.info("json1:"+json1);
-	        log.info("array:"+array);
-	        log.info("######### 목록조회 종료#########");
+	        logger.info("######### 목록조회 시작 #########");
+	        logger.info("json:"+json);
+	        logger.info("json1:"+json1);
+	        logger.info("array:"+array);
+	        logger.info("######### 목록조회 종료#########");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -207,8 +210,7 @@ public class apiCommon {
 		addUrl.append("&MobileApp=TourAPI3.0_Guide"); //서비스명
 		addUrl.append("&_type=json"); //JSON 타입
 		//addUrl.append("&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=12&pageNo=1");
-		System.out.println("travelUrl+addUrl.toString():"+travelUrl+addUrl.toString());	
-		
+		logger.info("travelUrl+addUrl.toString():"+travelUrl+addUrl.toString());
 		return readUrlData(travelUrl+addUrl.toString());
 	}
 	
@@ -229,7 +231,7 @@ public class apiCommon {
 		addUrl.append("&MobileOS=ETC"); 
 		addUrl.append("&MobileApp=TourAPI3.0_Guide"); 
 		addUrl.append("&_type=json"); 
-		System.out.println("areaCodeUrl+addUrl.toString():"+areaCodeUrl+addUrl.toString());	
+		logger.info("travelUrl+addUrl.toString():"+areaCodeUrl+addUrl.toString());
 		return readUrlData(areaCodeUrl+addUrl.toString());
 	}
 }

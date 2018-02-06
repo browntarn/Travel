@@ -109,7 +109,7 @@ function fn_selectList1($){
 	var allData = {"userId":userId, "userPass":userPass, "checkValues":checkValues, "checkValues2":checkValues2};
  
 	$("#list").jqGrid({
-		url : "<c:url value='/schedule/schedule001ListAjaxEx1.do'/>",
+		url : "<c:url value='/schedule/schedule001ListAjaxEx1'/>",
 		mtype : "POST",
 		data : allData,
 		async : false,
@@ -176,7 +176,7 @@ function fn_selectList2($){
 	//var allData = $("#listForm").serialize();
 	
 	$.ajax({
-		url : "<c:url value='/schedule/schedule001ListAjax.do'/>",
+		url : "<c:url value='/schedule/schedule001ListAjax'/>",
 		type : "POST",
 		data : JSON.stringify(allData),	//서버에 전송할 데이터
 		dataType : "json",				//서버로부터 수신할 데이터 타입
@@ -223,7 +223,7 @@ function fn_selectList3($){
 	var allData = $("#listForm").serialize();
 	
 	$.ajax({
-		url : "<c:url value='/schedule/schedule001ListAjax3.do'/>",
+		url : "<c:url value='/schedule/schedule001ListAjax3'/>",
 		type : "POST",
 		data : JSON.stringify(allData),
 		dataType : "json",
@@ -294,7 +294,7 @@ function setAreaCode($){
 	var $target = $("select[name='areaCode']");
 	$.ajax({
 		type : "POST",
-		url : "<c:url value='/common/selectAreaCode.do'/>",
+		url : "<c:url value='/common/selectAreaCode'/>",
 		contentType:"application/json;charset=UTF-8",
 		dataType : "json",
 		async: false,
@@ -324,7 +324,7 @@ function selectSigungu(val){
 	
 	$.ajax({
 		type : "POST",
-		url : "<c:url value='/common/selectSigunguCode.do'/>",
+		url : "<c:url value='/common/selectSigunguCode'/>",
 		data : JSON.stringify(allData),
 		contentType : "application/json; charset=UTF-8",
 		dataType : "json",
