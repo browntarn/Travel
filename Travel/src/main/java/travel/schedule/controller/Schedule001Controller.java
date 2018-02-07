@@ -54,7 +54,7 @@ public class Schedule001Controller {
 		return mv;
 	}	
 	
-/*	@RequestMapping(value="/schedule/schedule001ListAjax.do", method = RequestMethod.POST)
+/*	@RequestMapping(value="/schedule/schedule001ListAjax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> selectSchdule001ListAjax(@RequestParam Map<String, Object> map) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -63,7 +63,7 @@ public class Schedule001Controller {
 		return resultMap;
 	}*/
 	
-/*	@RequestMapping(value="/schedule/schedule001ListAjaxEx1.do", method = RequestMethod.POST)
+/*	@RequestMapping(value="/schedule/schedule001ListAjaxEx1", method = RequestMethod.POST)
 	@ResponseBody
 	public void schedule001ListAjaxEx1(@RequestParam Map<String, Object> map) throws Exception{
 		System.out.println("userId:"+map.get("userId"));
@@ -94,7 +94,7 @@ public class Schedule001Controller {
 		return dataList;
 	}
 	
-/*	@RequestMapping(value="/schedule/schedule001ListAjax3.do", method = RequestMethod.POST)
+/*	@RequestMapping(value="/schedule/schedule001ListAjax3", method = RequestMethod.POST)
 	@ResponseBody
 	public String selectSchdule001ListAjax3(@RequestBody String param) throws Exception{
 		

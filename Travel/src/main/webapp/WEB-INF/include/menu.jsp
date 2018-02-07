@@ -81,10 +81,8 @@
 				<!-- navbar menu -->
 				<div class="collapse navbar-collapse" id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#home">Home</a></li>
+						<li><a href="/">Home</a></li>
 						<li><a href="#features">About</a></li>
-						<li><a href="#business">Service</a></li>
-						<li><a href="#work">Portfolio</a></li>
 	                    <li><a href="/schedule/scheduleList">국내여행Ori</a></li>
 	                    <li><a href="/schedule/schdule001List">국내여행</a></li>
 	                    <li><a href="/accomm/accomm001List">숙박</a></li>

@@ -349,61 +349,55 @@ function selectSigungu(val){
 <div class="content">
 	<div class="container">
 		<form:form id="listForm" name="listForm" method="post">
-			<div id="content_pop">
-				<!-- 타이틀 -->
-				<div id="title">
-					<ul>
-						<li><img
-							src="<c:url value='/images/egovframework/example/title_dot.gif'/>"
-							alt="" />
-						<spring:message code="list.sample" /></li>
-					</ul>
-				</div>
+		<div id="content_pop">
+			<!-- 타이틀 -->
+			<div id="title">
+				<ul>
+					<li><img
+						src="<c:url value='/images/egovframework/example/title_dot.gif'/>"
+						alt="" />
+					<spring:message code="list.sample" /></li>
+				</ul>
 			</div>
-			<!-- /List -->
-			<div class="main_product roomy-40">
-				<div class="item active">
-					<div class="container">
-						<div class="row">
-							지역 : 
-							<select name="areaCode" id="areaCode" onChange="selectSigungu(this.value);" style="width:100px">
-								<option>선택</option>
-							</select>
-							<select name="sigunguCode" id="sigunguCode" style="width:100px">
-								<option>선택</option>
-							</select>							
-							<input type="hidden" name="userId" id="userId" value="test">
-							<input type="hidden" name="userPass" id="userPass" value="a12345">
+		</div>
+		<!-- /List -->
+		<div class="main_product roomy-40">
+			지역 : 
+			<select name="areaCode" id="areaCode" onChange="selectSigungu(this.value);" style="width:100px">
+				<option>선택</option>
+			</select>
+			<select name="sigunguCode" id="sigunguCode" style="width:100px">
+				<option>선택</option>
+			</select>							
+			<input type="hidden" name="userId" id="userId" value="test">
+			<input type="hidden" name="userPass" id="userPass" value="a12345">
 <!-- 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="영어">
 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="수학">
 								<input type="checkbox" name="list[0].hobboy" id="list[0].hobboy" value="과학"> -->
-							<input type="checkbox" name="hobboy" id="hobboy" value="영어">
-							<input type="checkbox" name="hobboy" id="hobboy" value="수학">
-							<input type="checkbox" name="hobboy" id="hobboy" value="과학">		
-							<input type="text" name="page" id="page">					
-						
+			<input type="checkbox" name="hobboy" id="hobboy" value="영어">
+			<input type="checkbox" name="hobboy" id="hobboy" value="수학">
+			<input type="checkbox" name="hobboy" id="hobboy" value="과학">		
+			<input type="text" name="page" id="page">					
+		
 <!--                             	<div class="home_btns m-top-40" id="search1">
                                 	<a href="#" class="btn btn-primary btn-xs m-top-20">검색</a>
                             	</div> -->
-                           	<input type="button" name="search1" id="search1" value="전송">     
-                           	<input type="button" name="search2" id="search2" value="조회">                           
-                           	<input type="button" name="search3" id="search3" value="전송">      	
-							<div>
+                       	<input type="button" name="search1" id="search1" value="전송">     
+                       	<input type="button" name="search2" id="search2" value="조회">                           
+                       	<input type="button" name="search3" id="search3" value="전송">      	
+			<div>
 <!-- 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="축구">
 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="농구">
 									<input type="checkbox" name="list[1].sports" id="list[1].sports" value="야구"> -->
-								<input type="checkbox" name="sports" id="sports" value="축구">
-								<input type="checkbox" name="sports" id="sports" value="농구">
-								<input type="checkbox" name="sports" id="sports" value="야구">									
-							</div>
-							<div>
-								<table id="JqGrid" border="1"></table>
-							</div>                      
-							<div id="listData"></div>      										
-						</div>						
-					</div>
-				</div>
-			</div>	
+				<input type="checkbox" name="sports" id="sports" value="축구">
+				<input type="checkbox" name="sports" id="sports" value="농구">
+				<input type="checkbox" name="sports" id="sports" value="야구">									
+			</div>
+			<div>
+				<table id="JqGrid" border="1"></table>
+			</div>                      
+			<div id="listData"></div>      										
+		</div>	
 		</form:form>
 	</div>
 </div>         
