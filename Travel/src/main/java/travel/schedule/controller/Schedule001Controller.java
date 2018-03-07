@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +32,8 @@ import egovframework.rte.fdl.property.EgovPropertyService;
 
 @Controller
 public class Schedule001Controller {
-	private static final Logger logger = LogManager.getLogger(Schedule001Controller.class);
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Schedule001Controller.class);
 	
 	@Resource(name = "schedule001Service")
 	private Schedule001Service schedule001Service;
@@ -78,7 +79,7 @@ public class Schedule001Controller {
 	@RequestMapping(value="/schedule/schedule001ListAjax", method = RequestMethod.POST)
 	@ResponseBody
 	public String selectSchdule001ListAjax(@RequestBody String param) throws Exception{
-		logger.info("param:"+param);
+		LOGGER.info("param:"+param);
 		
 /*		JSONObject json1 = JSONObject.fromObject(param);
 		System.out.println("json1:"+json1.get("userId"));
@@ -90,7 +91,7 @@ public class Schedule001Controller {
 		}
 		*/
 		String dataList = schedule001Service.selectSchdule001ListAjax(param);
-		logger.info("dataList:"+dataList);
+		LOGGER.info("dataList:"+dataList);
 		return dataList;
 	}
 	

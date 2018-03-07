@@ -92,6 +92,42 @@ public class HomeController {
 		map.put("AA", "1");
 		map.put("BB", "2");
 		return map;
-	}		
+	}
+	
+	@RequestMapping(value = "/test6.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String test6(){
+		
+		JSONObject jsonObject = new JSONObject();
+		JSONArray listData = new JSONArray();
+		JSONObject listInfo = new JSONObject();
+
+		// 정보 입력
+		listInfo.put("SEQ", "송강호");
+		listInfo.put("TITLE", "남자");
+		listInfo.put("INSERT_TIME", "25");
+		listInfo.put("INSERT_ID", "남궁민수");
+		listInfo.put("READ_COUNT", "1");
+		// Array에 입력
+		listData.add(listInfo);
+
+		listInfo = new JSONObject();
+		listInfo.put("SEQ", "송강호");
+		listInfo.put("TITLE", "남자");
+		listInfo.put("INSERT_TIME", "25");
+		listInfo.put("INSERT_ID", "남궁민수");
+		listInfo.put("READ_COUNT", "1");
+		listData.add(listInfo);
+
+		// 전체의 JSONObject에 사람이란 name으로 JSON의 정보로 구성된 Array의 value를 입력
+		jsonObject.put("page", "1");
+		jsonObject.put("total", "2");
+		jsonObject.put("listData", listData);
+
+		String jsonInfo = jsonObject.toString();
+		System.out.println("jsonInfo:" + jsonInfo);
+
+		return jsonInfo;
+	}
 
 }

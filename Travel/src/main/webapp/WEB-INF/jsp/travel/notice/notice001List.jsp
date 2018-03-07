@@ -27,17 +27,18 @@
 	width:80px;
 }
 
-
 .btn{
 	font-size:12px;
 	padding:14px;
 }
 </style>
-<link rel="stylesheet" type="text/css" media="screen" href="/js/jqueryui/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" media="screen" href="/jquery.jqGrid-4.4.3/css/ui.jqgrid.css" />    
+<link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.12.1.custom/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.12.1.custom/jquery-ui.theme.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/jquery.jqGrid-4.4.3/css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/jquery.jqGrid-4.4.3/plugins/ui.multiselect.css" />        
 
 <script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/jqueryui/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/i18n/grid.locale-kr.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 
@@ -50,23 +51,31 @@ $(document).ready(function($){
 		e.preventDefault();
 		fn_selectList($);
 	});
+	$("#save").on("click", function(e){
+		e.preventDefault();
+		fn_save($);
+	})
 });
 
 function setGrid($){
 	$("#JqGrid").jqGrid({
 	 	colNames:[
+	 	         '체크박스',
 		         '순번',
+		         '순번1',
 		         '제목',
-		         '작성자',
 		         '작성시간',
+		         '작성자',
 		         '조회수',
 		         ],
 		colModel:[
-		          { name:'seq', 			index:'seq', 			width:30 },
-		          { name:'title', 			index:'title', 			width:200 },
-		          { name:'name', 			index:'name',	 		width:50 },
-		          { name:'insertTime', 		index:'insertTime', 	width:50 },
-		          { name:'readCount', 		index:'readCount', 		width:30 },				          
+		          {name:'checkBox', index:'checkBox', width:10, edittype:'checkbox',formatter: "checkbox",editoptions: { value:"True:False"},editable:true,formatoptions: {disabled : false}},
+		          { name:'SEQ',				index:'SEQ', 			width:30,	editable:false, key:true},
+		          { name:'GRP_SEQ',			index:'GRP_SEQ', 		width:0,	editable:false, key:true, hidden:true },
+		          { name:'TITLE', 			index:'TITLE', 			width:200,	editable:true	},
+		          { name:'INSERT_TIME', 	index:'INSERT_TIME', 	width:50,	editable:false, formatter:'ddate', formatoptions:{srcformat:"y-m-d H:i", newformat:"y-m-d H:i"}},
+		          { name:'INSERT_ID', 		index:'INSERT_ID', 		width:50,	editable:false 	},
+		          { name:'READ_COUNT', 		index:'READ_COUNT', 	width:30,	editable:false	},				          
 		          ],
   	   	rowNum : 10,
   	   	autowidth : true,
@@ -75,46 +84,87 @@ function setGrid($){
 	   	rowList:[10,20,30],
 	   	height : "220",
 	   	pager: '#listData',
-	    viewrecords: false,
-	   	caption: "게시판 목록", 					   	
-	});
-} 
+	   	datatype: 'local',
+	    viewrecords: true,
+	   	caption: "게시판 목록",
+	   	multiselect : true,
+	   	loadonce : true,
+	   	loadtext:"로딩중..",
+	   	cellEdit : true,
+	   	//cellsubmit:'remote',   //remote 셀수정시 ajax 실행, clientArray 바로 ajax 실행X 
+	   	//cellurl:"<c:url value='/notice/updateNotice001'/>",
+	   	//editurl : "clientArray", // 값 수정후 엔터치면 지정된 url로 날라감
+	   	cellSubmit : 'clientArray',
+	   	gridComplete : function(){
+	   		
+	   	},
+	   	loadError : function(xhr, status, error){
+	   		alert("error:"+error);
+	   	},
+	   	beforeSubmitCell : function(rowid, cellName, cellValue){
+	   		console.log("beforeSumitCell rowid:"+rowid+", cellName:"+cellName+", cellValue:"+cellValue);
+	   		//return { "id":rowid, "cellName":cellName, "cellValue":cellValue }
+	   	},
+	   	afterSubmitCell : function(res){
+	   		console.log("afterSubmitCell res:"+res);
+	   		var aRes = $.parseJSON(res.responseText);
+	   		console.log("aRes:"+aRes);
+	   	},
+	   	afterSaveCell : function(rowid, name, val, iRow, iCol){
+	   		alert(rowid+val+name);
+	   	},
+	 	beforeProcessing : function(data){
+	 		alert("data:"+data);
+	 		boardBean = data.bean;
+	 	},
+	 	onCellSelect : function(row, col, val, e){
+	 		var cm = $("#JqGrid").jqGrid("getGridParam", "colModel");
+	 		console.log("bb:"+cm[col].name);
+	 	}
+	 	
+		//editurl: "URL.action",                // 셀이 수정될 때 수정 요청을 받아서 처리할 URL
+		//cellEdit: true,                       // 셀 수정 기능을 사용하려면 true!
+		//cellurl:'/managerjqGridCRUD.action',  // 셀 수정 후 submit url
+		});
+	}
 
-function fn_selectList($){
+	function checkBox(cellvalue, options, rowObject) {
+		var name = rowObject['name'];
+		var str = "<input type=\"checkbox\"name=\"chk\"value="+name+">";
 
-	var allData = {
+		return str;
+	}
 
-	};
-	//var allData = $("#listForm").serialize();
-	
-	$.ajax({
-		url : "<c:url value='/notice/notice001ListAjax'/>",
-		type : "POST",
-		data : JSON.stringify(allData),	//서버에 전송할 데이터
-		dataType : "json",				//서버로부터 수신할 데이터 타입
-		loadtext : '로딩중..',			
-		contentType : "application/json; charset=UTF-8",
-		async : false,
-		success : function (data, status, xhr){
-			console.log("data:"+data);
-			console.log("data1:"+data.response.body.items.item);
-			var listData = data.response.body.items.item;
-			console.log("listData:"+listData);
-			console.log("listData[0]:"+listData[0]);
-			console.log("data2:"+listData.length);
-			console.log("data3:"+listData[0].eventenddate);
-			console.log("data4:"+listData[0].contentid);
-			
- 			$("#JqGrid").clearGridData();
-   			for(var i=0;i<=listData.length;i++){
-		         //jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
-		         $("#JqGrid").jqGrid('addRowData',i+1,listData[i]);
-		 	}    
-			$("#JqGrid").trigger('reloadGrid');
-		}
-	});
-}
+	function fn_selectList($) {
+		var allData = {};
+		//var allData = $("#listForm").serialize();
+		var listData;
 
+		$.ajax({
+			url : "<c:url value='/notice/notice001ListAjax'/>",
+			type : "POST",
+			data : JSON.stringify(allData), //서버에 전송할 데이터
+			dataType : "json", //서버로부터 수신할 데이터 타입
+			contentType : "application/json; charset=UTF-8",
+			async : false,
+			success : function(data, status, xhr) {
+				console.log("data:" + data);
+				$("#JqGrid").clearGridData();
+				$("#JqGrid").jqGrid('setGridParam', {
+					data : data.listData
+				});
+				// refresh the grid
+				$("#JqGrid").trigger('reloadGrid');
+			}
+		});
+	}
+	function fn_save($) {
+		var ret = $("#JqGrid").getChangedCells("all");
+		console.log("ret:" + ret);
+
+		var data = $("#JqGrid").jqGrid("getGridParam", "selrow");
+		console.log("data:" + data);
+	}
 </script>
 </head>
 <div class="content">
@@ -142,8 +192,11 @@ function fn_selectList($){
 			<input type="hidden" name="userPass" id="userPass" value="a12345">
 			<input type="text" name="page" id="page">					
            	<input type="button" name="search" id="search" value="조회">
+           	<input type="button" name="save" id="save" value="저장">
 			<table id="JqGrid" border="1"></table>
-			<div id="listData"></div>
+				<div id="listData"></div>
+			<table id="list" border="1"></table>
+			<div id="pager2"></div>			
 		</div>							 	
 	</div>
 </div>         

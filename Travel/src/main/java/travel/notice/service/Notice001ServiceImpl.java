@@ -1,6 +1,7 @@
 package travel.notice.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,8 +16,13 @@ public class Notice001ServiceImpl implements Notice001Service{
 	private Notice001DAO notice001DAO;
 
 	@Override
-	public void selectNotice001ListAjax() throws Exception {
-		List<?> list = notice001DAO.selectNotice001List();
-		System.out.println("list:"+list.size());
+	public List<Map<String, Object>> selectNotice001ListAjax() throws Exception {
+		return (List<Map<String, Object>>) notice001DAO.selectNotice001List();
 	}
+
+	@Override
+	public void updateNotice001(Map<String, Object> map) throws Exception {
+		notice001DAO.updateNotice001(map);
+	}
+
 }

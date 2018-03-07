@@ -32,7 +32,7 @@
 	padding:14px;
 }
 </style>
-<link rel="stylesheet" type="text/css" media="screen" href="/js/jqueryui/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.12.1.custom/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" media="screen" href="/jquery.jqGrid-4.4.3/css/ui.jqgrid.css" />    
 
 <script src="${pageContext.request.contextPath}/jquery.jqGrid-4.4.3/js/jquery-1.7.2.min.js" type="text/javascript"></script>

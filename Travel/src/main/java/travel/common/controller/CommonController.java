@@ -1,8 +1,9 @@
 package travel.common.controller;
 
 import javax.annotation.Resource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import travel.common.service.CommonService;
 @Controller
 public class CommonController {
 	
-	private static final Logger logger = LogManager.getLogger(CommonController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
 
 	@Resource(name="commonService")
 	private CommonService commonService;
@@ -27,7 +28,7 @@ public class CommonController {
 	@RequestMapping(value="/common/selectSigunguCode")
 	@ResponseBody
 	public String selectSigunguCode(@RequestBody String param) throws Exception{
-		logger.info("param:"+param);
+		LOGGER.info("param:"+param);
 		return commonService.selectSigunguCode(param);
 	}
 	
