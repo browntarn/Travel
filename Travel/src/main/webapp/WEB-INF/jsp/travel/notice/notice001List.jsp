@@ -47,17 +47,33 @@
 // jquery 버전충돌시 function($) 를 넣어준다
 $(document).ready(function($){
 	setGrid($);
+	//조회
 	$("#search").on("click", function(e){
 		e.preventDefault();
 		fn_selectList($);
 	});
+	//저장
 	$("#save").on("click", function(e){
 		e.preventDefault();
 		fn_save($);
 	})
+	//입력
+	$("#insertForm").on("click", function(e){
+		e.preventDefatul();
+		fn_insertForm();
+	})
+	
+	$("#chk").change(function(){
+		if($("#check").is(":checked")){
+			alert("체크박스체크");
+		}else{
+			alert("체크박스해제");
+		}
+	});
 });
 
 function setGrid($){
+	var editableCells = ['TITLE'];
 	$("#JqGrid").jqGrid({
 	 	colNames:[
 	 	         '체크박스',
@@ -69,10 +85,10 @@ function setGrid($){
 		         '조회수',
 		         ],
 		colModel:[
-		          {name:'checkBox', index:'checkBox', width:10, edittype:'checkbox',formatter: "checkbox",editoptions: { value:"True:False"},editable:true,formatoptions: {disabled : false}},
+		          { name:'checkBox', 		index:'checkBox', 		width:10, 	edittype:'checkbox',formatter: "checkbox",editoptions: { value:"True:False"},editable:true,formatoptions: {disabled : false}},
 		          { name:'SEQ',				index:'SEQ', 			width:30,	editable:false, key:true},
 		          { name:'GRP_SEQ',			index:'GRP_SEQ', 		width:0,	editable:false, key:true, hidden:true },
-		          { name:'TITLE', 			index:'TITLE', 			width:200,	editable:true	},
+		          { name:'TITLE', 			index:'TITLE', 			width:200,	editable:false	},
 		          { name:'INSERT_TIME', 	index:'INSERT_TIME', 	width:50,	editable:false, formatter:'ddate', formatoptions:{srcformat:"y-m-d H:i", newformat:"y-m-d H:i"}},
 		          { name:'INSERT_ID', 		index:'INSERT_ID', 		width:50,	editable:false 	},
 		          { name:'READ_COUNT', 		index:'READ_COUNT', 	width:30,	editable:false	},				          
@@ -105,6 +121,22 @@ function setGrid($){
 	   		console.log("beforeSumitCell rowid:"+rowid+", cellName:"+cellName+", cellValue:"+cellValue);
 	   		//return { "id":rowid, "cellName":cellName, "cellValue":cellValue }
 	   	},
+	   	ondblClickRow : function(rowid, iRow, iCol){
+	   		console.log("ondblClick");
+	   		var colModels = $(this).getGridParam('colModel');
+	   		var colName = colModels[iCol].name;
+	   		if(editableCells.indexOf(colName) >=0){
+		   		$(this).setColProp(colName, {editable: true});
+		   		$(this).editCell(iRow, iCol, true);
+	   		}
+	   	},
+	   	afterEditCell : function(rowid, cellname, value, iRow, iCol){
+	   		console.log("afterEditCell:"+rowid+"_"+cellname+"_"+iRow+"_"+iCol);
+	   		$(this).setColProp(cellname, {editable: false});
+	   		$("#"+rowid+"_"+cellname).blur(function(){
+				$("#JqGrid").jqGrid("saveCell", iRow, iCol);
+	   		});
+	   	},
 	   	afterSubmitCell : function(res){
 	   		console.log("afterSubmitCell res:"+res);
 	   		var aRes = $.parseJSON(res.responseText);
@@ -120,8 +152,7 @@ function setGrid($){
 	 	onCellSelect : function(row, col, val, e){
 	 		var cm = $("#JqGrid").jqGrid("getGridParam", "colModel");
 	 		console.log("bb:"+cm[col].name);
-	 	}
-	 	
+	 	} 	
 		//editurl: "URL.action",                // 셀이 수정될 때 수정 요청을 받아서 처리할 URL
 		//cellEdit: true,                       // 셀 수정 기능을 사용하려면 true!
 		//cellurl:'/managerjqGridCRUD.action',  // 셀 수정 후 submit url
@@ -130,7 +161,7 @@ function setGrid($){
 
 	function checkBox(cellvalue, options, rowObject) {
 		var name = rowObject['name'];
-		var str = "<input type=\"checkbox\"name=\"chk\"value="+name+">";
+		var str = "<input type=\"checkbox\" name=\"chk\" id=\"chk\" value="+name+">";
 
 		return str;
 	}
@@ -193,6 +224,7 @@ function setGrid($){
 			<input type="text" name="page" id="page">					
            	<input type="button" name="search" id="search" value="조회">
            	<input type="button" name="save" id="save" value="저장">
+           	<input type="button" name="insertForm" id="insertForm" value="입력">
 			<table id="JqGrid" border="1"></table>
 				<div id="listData"></div>
 			<table id="list" border="1"></table>

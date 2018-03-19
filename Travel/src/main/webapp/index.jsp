@@ -161,6 +161,7 @@
 		                    <li><a href="/schedule/schdule001List">국내여행</a></li>
 		                    <li><a href="/accomm/accomm001List">숙박</a></li>
 		                    <li><a href="/notice/notice001List">게시판</a></li>
+		                    <li><a href="/user/user001List">회원관리</a></li>
 							<li><a href="#contact">공지사항</a></li>
 							<li><a href="/2017.jsp">메인</a></li>
                             <li><a href="">음식</a></li>

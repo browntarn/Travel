@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice001">
+
+	<select id="selectNotice001List" resultType="hashmap">
+	
+		SELECT LEVEL, A.*
+		  FROM P_BOARD A
+		 START WITH PARENT_SEQ = 0
+	   CONNECT BY PRIOR SEQ = PARENT_SEQ
+		 ORDER SIBLINGS BY GRP_SEQ DESC
+	</select>
+	
+	<update id="updateNotice001" parameterType="hashmap">
+		UPDATE P_BOARD
+		   SET TITLE = #{TITLE}
+		      ,INSERT_TIME = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+		 WHERE SEQ = '100'
+	</update>
+
+</mapper>
