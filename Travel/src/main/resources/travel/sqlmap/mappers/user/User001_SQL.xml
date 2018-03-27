@@ -14,4 +14,42 @@
 		      ,EN_LAN
 		 FROM P_USER_INFO					
 	</select>
+	
+	<insert id="insertUser001" parameterType="hashmap">
+<!-- 		<selectKey keyProperty="SEQ" resultType="java.lang.String" order="BEFORE">
+			SELECT MAX(SEQ)+1 FROM P_USER_INFO;
+		</selectKey> -->
+		INSERT INTO P_USER_INFO
+				(
+				     SEQ
+				    ,CSEQ
+					,ID
+					,PASSWD
+					,MNAME
+			      	,ADDRESS
+			      	,ZIP
+			      	,TEL
+			      	,EMAIL
+			      	,CLEVEL
+			      	,CDATE
+			      	,USE_FLAG
+			      	,EN_LAN
+				)
+				VALUES
+				(
+					2
+				   ,'11'
+				   ,#{ID}
+				   ,'11'
+				   ,#{MNAME}
+				   ,#{ADDRESS}
+				   ,#{ZIP}
+				   ,#{TEL}
+				   ,#{EMAIL}
+				   ,#{CLEVEL}
+				   ,SYSDATE
+				   ,#{USE_FLAG}
+				   ,#{EN_LAN}
+				)
+	</insert>
 </mapper>

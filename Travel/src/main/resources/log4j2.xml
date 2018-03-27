@@ -37,7 +37,7 @@
             <appender-ref ref="console" />
             <appender-ref ref="file" />
         </logger>
-        <logger name="java.sql.Connection" level="DEBUG" additivity="false">
+        <logger name="java.sql.Connection" level="ERROR" additivity="false">
             <appender-ref ref="console" />
             <appender-ref ref="file" />
         </logger>
@@ -45,7 +45,7 @@
             <appender-ref ref="console" />
             <appender-ref ref="file" />
         </logger>
-        <logger name="java.sql.PreparedStatement" level="DEBUG" additivity="false">
+        <logger name="java.sql.PreparedStatement" level="INFO" additivity="false">
             <appender-ref ref="console" />
             <appender-ref ref="file" />
         </logger>

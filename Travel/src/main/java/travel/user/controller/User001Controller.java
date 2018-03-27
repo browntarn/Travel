@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,5 +40,11 @@ public class User001Controller {
 		jsonObject.put("listData", listData);
 		logger.info("returnData:"+jsonObject.toString());
 		return jsonObject.toString();
+	}
+	
+	@RequestMapping(value = "/user/insertUser001")
+	@ResponseBody
+	public int insertUser001(@RequestParam Map<String, Object> map) throws Exception{
+		return user001Service.insertUser001(map);
 	}
 }

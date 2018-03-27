@@ -77,6 +77,7 @@ function setGrid($){
 		          "권한",
 		          "가입일",
 		          "사용여부",
+		          "언어",
 		          ],
 		colModel:[
 		          { name:'ID',		index:'ID',    	 	width:100, editable:true},
@@ -88,6 +89,7 @@ function setGrid($){
 		          { name:'CLEVEL',	index:'CLEVEL',     width:100, editable:true},
 		          { name:'CDATE',	index:'CDATE',      width:100},
 		          { name:'USE_FLAG',index:'USE_FLAG',   width:100, editable:true},
+		          { name:'EN_LAN',  index:'EN_LAN',     width:100, editable:true},
 		          ],
 		rowNum : 10,
 		autowidth : true,
@@ -101,7 +103,7 @@ function setGrid($){
 		caption : "회원정보",
 		width : 500,
 		shrinkToFit : false,
-		editurl : "/notice/insertNotice001",
+		editurl : "/user/insertUser001",
 		onSelectRow : function(id){
 			if(id && id!==lastSel){
 				$("#JqGrid").restoreRow(lastSel);
@@ -168,13 +170,18 @@ function fn_insert($){
 	//line+=1;
 	console.log("line:"+line);
 	rowid = "new_line"+line;
-	$("#JqGrid").jqGrid("addRow", {
+	var rowdata11 = {
+						name:'ID',		index:'ID'
+					   ,name:'MNAME',	index:'MNAME'	
+					};
+	$("#JqGrid").jqGrid("addRowData", rowid, rowdata11, 'last');
+/* 	$("#JqGrid").jqGrid("addRow", {
 		rowID : rowid,
 		position : "last", //first, last
 		useDefValues : false,
 		useFormatter : false,
 		addRowParams : {extraparam:{}}
-	});
+	}); */
 }
 
 function fn_save($){

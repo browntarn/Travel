@@ -18,5 +18,11 @@ public class User001ServiceImpl implements User001Service{
 	@Override
 	public List<Map<String, Object>> selectUser001ListAjax() throws Exception {
 		return (List<Map<String, Object>>) user001DAO.selectUser001List();
+	}
+
+	@Override
+	public int insertUser001(Map<String, Object> map) throws Exception {
+		user001DAO.insertUser001(map);
+		return 0;
 	}  
 }
